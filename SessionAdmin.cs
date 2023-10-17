@@ -22,7 +22,6 @@ namespace SessionAdminApp
 
             Console.WriteLine("Les informations de l'entreprise ont été enregistrées.");
         }
-
         public static void CreerPostes( Entreprise entreprise){
             int nbrePoste = 0;
             
@@ -32,15 +31,15 @@ namespace SessionAdminApp
             for (int i = 0; i < nbrePoste; i++)
             {   
                 string nomPoste;
-                decimal salaireBase, TauxAugmentation, DiviseurSalaire;
+                double salaireBase, TauxAugmentation, DiviseurSalaire;
                 Console.Write("Nom : ");    
                 nomPoste = Console.ReadLine();
                 Console.Write("Salaire de base : ");  
-                salaireBase = decimal.Parse(Console.ReadLine());
+                salaireBase = double.Parse(Console.ReadLine());
                 Console.Write("Taux augmentation : ");  
-                TauxAugmentation = decimal.Parse(Console.ReadLine());
+                TauxAugmentation = double.Parse(Console.ReadLine());
                 Console.Write("Diviseur Salaire (x) : ");  
-                DiviseurSalaire = decimal.Parse(Console.ReadLine());
+                DiviseurSalaire = double.Parse(Console.ReadLine());
       
             }
         }
