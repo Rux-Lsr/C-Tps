@@ -6,9 +6,6 @@ namespace SessionAdminApp
     interface SessionAdmin
     {
 
-        /// <summary>
-        ///     Remplir les informations necessaires pour etre une entreprise
-        /// </summary>
         public  static void EntrerInformationsEntreprise(ref Entreprise entreprise)
         {
             string nom;
@@ -18,8 +15,7 @@ namespace SessionAdminApp
             while(Fonction.TestOnName(nom = Console.ReadLine()));
 
             Console.WriteLine("Entrez l'annees de creation de l'entreprise (au format yyyy)");
-            while(Fonction.TestOnNumber(Console.ReadLine(), ref dateCreation) | !Fonction.InTheInterval(1900, DateTime.Now.Year, dateCreation));
-
+           dateCreation = int.Parse(Console.ReadLine());
             // Création d'un objet Entreprise avec les informations entrées
             entreprise.NomEntreprise = nom;
             entreprise.DateCreation = dateCreation;
@@ -27,52 +23,29 @@ namespace SessionAdminApp
             Console.WriteLine("Les informations de l'entreprise ont été enregistrées.");
         }
 
-        public static Poste CreerPoste( Entreprise entreprise)
-        {
-            Poste poste;
-            do{
-                string nom;
-                Console.WriteLine("Entrez le nom du poste:");
-                while(Fonction.TestOnName(nom = Console.ReadLine()));
-                Console.WriteLine("Entrez le taux d'augmentation pour ce poste:");
-                decimal tauxAugmentation = 0;
-                while(Fonction.TestOnDecimalNumber(Console.ReadLine(), ref tauxAugmentation));
-                Console.WriteLine("Entrez le diviseur de salaire pour ce poste:");
-                int diviseurSalaire = int.Parse(Console.ReadLine());
-                poste = new Poste(nom, tauxAugmentation, diviseurSalaire);
-            }
-            // Création d'un objet Poste avec les informations entrées
-            while(entreprise.AjouterPoste(poste));
-
-            Console.WriteLine("Le poste a été créé avec succès.");
-            return poste;
-        }
-
         public static void CreerPostes( Entreprise entreprise){
-            int nbreEmploye = 0;
+            int nbrePoste = 0;
             
-            Console.WriteLine("Quel nombre de poste voulez creer?\n>");
-            while(Fonction.TestOnNumber(Console.ReadLine(), ref nbreEmploye));
+            Console.Write("entrez le nombre de poste à creer \n> ");
+            nbrePoste = int.Parse(Console.ReadLine());
 
-            for (int i = 0; i < nbreEmploye; i++)
-            {
-                entreprise.SetPoste(CreerPoste(entreprise)); 
-            }
-            InitialiserSalaires(entreprise);
-        }
-
-        public static void InitialiserSalaires( Entreprise entreprise)
-        {
-            foreach (Poste poste in entreprise.GetAllPostes())
-            {
-                Console.WriteLine($"Entrez le salaire de base pour le poste {poste.NomPoste}:");
-                decimal salaireDeBase = decimal.Parse(Console.ReadLine());
-
-                poste.SalaireDeBase = salaireDeBase;
-
-                Console.WriteLine($"Le salaire de base pour le poste {poste.NomPoste} a été initialisé à {salaireDeBase}.");
+            for (int i = 0; i < nbrePoste; i++)
+            {   
+                string nomPoste;
+                decimal salaireBase, TauxAugmentation, DiviseurSalaire;
+                Console.Write("Nom : ");    
+                nomPoste = Console.ReadLine();
+                Console.Write("Salaire de base : ");  
+                salaireBase = decimal.Parse(Console.ReadLine());
+                Console.Write("Taux augmentation : ");  
+                TauxAugmentation = decimal.Parse(Console.ReadLine());
+                Console.Write("Diviseur Salaire (x) : ");  
+                DiviseurSalaire = decimal.Parse(Console.ReadLine());
+      
             }
         }
+
+       
         public void Menu(){
             Console.WriteLine("1 - Remplir les infos de l'entreprise\n2 - Creer des poste pour votre entreprise\n 0-Quitter");
         }

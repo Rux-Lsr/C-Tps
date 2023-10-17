@@ -4,7 +4,7 @@ namespace EnterpriseApp
     {
         public string NomEntreprise { get; set; } = "Not Defined";
         public int DateCreation { get; set; } = 2000;
-        private List<Poste> Postes = new List<Poste>();
+        public List<Poste> Postes { get; set; } = new List<Poste>();
         private List<Salaire> Salaires = new List<Salaire>();
 
         // Constructeur
