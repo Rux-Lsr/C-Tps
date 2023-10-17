@@ -1,15 +1,15 @@
 public class Poste
 {
     public string NomPoste { get; set; }
-    public decimal SalaireDeBase { get; set; }
-    public decimal TauxAugmentation { get; set; }
-    public decimal DiviseurSalaire { get; set; }
+    public double SalaireDeBase { get; set; }
+    public double TauxAugmentation { get; set; }
+    public double DiviseurSalaire { get; set; }
 
     // Constructeur
-    public Poste(string nomPoste, decimal tauxAugmentation, decimal diviseurSalaire)
+    public Poste(string nomPoste, double tauxAugmentation, double diviseurSalaire, double SalaireDeBase)
     {
         NomPoste = nomPoste;
-        SalaireDeBase = 100000;
+        this.SalaireDeBase = SalaireDeBase;
         TauxAugmentation = tauxAugmentation;
         DiviseurSalaire = diviseurSalaire;
     }
