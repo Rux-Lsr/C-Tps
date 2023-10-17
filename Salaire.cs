@@ -5,7 +5,7 @@ public class Salaire
     public string SexeEmploye { get; set; }
     public int AnneRecrutement { get; set; }
     public Poste PosteEmploye { get; set; }
-    public decimal SalaireEmploye { get; set; }
+    public double SalaireEmploye { get; set; }
     public static int NumeroEmploye { get; set; }
 
     // Constructeur
@@ -20,13 +20,13 @@ public class Salaire
     }
 
     // Méthode pour calculer le salaire d'un employé
-    public decimal CalculerSalaire()
+    public double CalculerSalaire()
     {
         try
         {
             int anciennete = DateTime.Now.Year - AnneRecrutement;
-            decimal augmentation = (decimal)(PosteEmploye.SalaireDeBase * PosteEmploye.TauxAugmentation / 100) * anciennete;
-            decimal salaire = (decimal)(PosteEmploye.SalaireDeBase + augmentation) / PosteEmploye.DiviseurSalaire;
+            double augmentation = (double)(PosteEmploye.SalaireDeBase * PosteEmploye.TauxAugmentation / 100) * anciennete;
+            double salaire = (double)(PosteEmploye.SalaireDeBase + augmentation) / PosteEmploye.DiviseurSalaire;
 
             return salaire;
         }

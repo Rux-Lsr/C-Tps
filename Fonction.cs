@@ -54,7 +54,6 @@ namespace FonctionsApp
                 return true;
             }else
             {
-                Console.WriteLine("ok");
                 ValidYear = R.Year;
                 return false;
             }
@@ -74,7 +73,6 @@ namespace FonctionsApp
                     Console.WriteLine("entrez une valeur supperieure à 0: ");
                     return true;
                 }
-                Console.WriteLine("ok");
                 number = R;
                 return false;
             }
@@ -95,7 +93,7 @@ namespace FonctionsApp
                     Console.WriteLine("entrez une valeur supperieure à 0: ");
                     return true;
                 }
-                Console.WriteLine("ok");
+
                 number = R;
                 return false;
             }
@@ -115,7 +113,6 @@ namespace FonctionsApp
                     Console.WriteLine("entrez une valeur supperieure à 0: ");
                     return true;
                 }
-                Console.WriteLine("ok");
                 number = R;
                 return false;
             }

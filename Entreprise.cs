@@ -5,7 +5,7 @@ namespace EnterpriseApp
         public string NomEntreprise { get; set; } = "Not Defined";
         public int DateCreation { get; set; } = 2000;
         public List<Poste> Postes { get; set; } = new List<Poste>();
-        private List<Salaire> Salaires = new List<Salaire>();
+        public List<Salaire> Salaires { get; set; } = new List<Salaire>();
 
         // Constructeur
         public Entreprise(string nom, int dateCreation)
@@ -29,7 +29,7 @@ namespace EnterpriseApp
         {
             if (Postes.Any(p => p.NomPoste == poste.NomPoste))
             {
-                Console.WriteLine("Le poste existe déjà.");
+                Console.WriteLine("Le poste existe déjà, veuillez ressaisir ...");
                 return true;
             }
             else
