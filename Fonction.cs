@@ -6,11 +6,10 @@ namespace FonctionsApp
         {
             if (string.IsNullOrEmpty(name))
             {
-                Console.WriteLine("Vous n'avez point entré de nom !!! -> ");
+                Console.WriteLine("Le champ est vide !!! -> ");
                 return true;
             }else
-            {
-                Console.WriteLine("ok");    
+            { 
                 return false;
             }
         }
@@ -68,7 +67,7 @@ namespace FonctionsApp
             }
             else
             {
-                if (R == 0)
+                if (R <= 0)
                 {
                     Console.WriteLine("entrez une valeur supperieure à 0: ");
                     return true;
@@ -88,7 +87,7 @@ namespace FonctionsApp
             }
             else
             {
-                if (R == 0)
+                if (R <= 0)
                 {
                     Console.WriteLine("entrez une valeur supperieure à 0: ");
                     return true;
@@ -108,7 +107,7 @@ namespace FonctionsApp
             }
             else
             {
-                if (R == 0)
+                if (R <= 0)
                 {
                     Console.WriteLine("entrez une valeur supperieure à 0: ");
                     return true;
@@ -117,8 +116,13 @@ namespace FonctionsApp
                 return false;
             }
         }
+
         public static int Menu(){
+            string msg = "MENU-General";
             int choix = 0;
+            Console.SetCursorPosition((Console.WindowWidth-msg.Length)/2, Console.CursorTop);
+            Console.WriteLine(msg);
+            
             Console.WriteLine("1 - Session Administrateur\n2 - Session Utilisateur\n0 - Quitter");
             while (TestOnNumber(Console.ReadLine(), ref choix) || !Fonction.InTheInterval(0, 2, choix));
 

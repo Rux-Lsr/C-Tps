@@ -11,13 +11,22 @@ namespace SessionAdminApp
         {
             string nom;
             int dateCreation = 0;
+            string input, msg = "ENREGISTREMENT DES INFORMATIONS DE L'ENTREPRISE";
 
+            Console.SetCursorPosition((Console.WindowWidth-msg.Length)/2, Console.CursorTop);
+            Console.WriteLine(msg);
+        //Recuperation du nom de l'entreprise
+        
             Console.WriteLine("Entrez le nom de l'entreprise:");
             while(Fonction.TestOnName(nom = Console.ReadLine()));
-
-            Console.WriteLine("Entrez l'annees de creation de l'entreprise (au format yyyy)");
-           dateCreation = int.Parse(Console.ReadLine());
-            // Création d'un objet Entreprise avec les informations entrées
+        //Recuperation de la date de creation de l'ntreprise
+            do
+            {
+                Console.WriteLine("Entrez l'annee de creation de l'entreprise (au format yyyy) ");
+                input = Console.ReadLine();
+                
+            } while (Fonction.TestOnNumber(input, ref dateCreation));
+        // Modification des informations d'un objet Entreprise avec les informations entrées
             entreprise.NomEntreprise = nom;
             entreprise.DateCreation = dateCreation;
             Console.Clear();
@@ -25,51 +34,63 @@ namespace SessionAdminApp
         }
         private static void CreerPostes(ref Entreprise entreprise){
             int nbrePoste = 0;
+            string nomPoste;
+            string msg = "CREATION DES POSTES DE L'ENTREPRISE";
+            double salaireBase = 0, TauxAugmentation = 0, DiviseurSalaire = 0;
+            int count = 0;
+            bool resp;
+            
             Console.Clear();
-            Console.Write("entrez le nombre de poste à creer \n> ");
-            nbrePoste = int.Parse(Console.ReadLine());
+            Console.SetCursorPosition((Console.WindowWidth-msg.Length)/2, Console.CursorTop);
+            Console.WriteLine(msg);
+            do
+            {
+                Console.Write("entrez le nombre de poste à creer \n> ");
+            } while (Fonction.TestOnNumber(Console.ReadLine(), ref nbrePoste) || nbrePoste < 0);
             Console.Clear();
-                string nomPoste;
-                double salaireBase, TauxAugmentation, DiviseurSalaire;
-                int count = 0;
                 
-                while (true)
-                {   
-                    bool resp = false;
-                    try
-                    {
-                        
-                        
+            
                         do
-                        {
-                            Console.WriteLine("*******Employe "+count+1+"********");
-                            Console.Write("Nom : ");    
-                            nomPoste = Console.ReadLine();
-                            Console.Write("Salaire de base : ");  
-                            salaireBase = double.Parse(Console.ReadLine());
-                            Console.Write("Taux augmentation : ");  
-                            TauxAugmentation = double.Parse(Console.ReadLine());
-                            Console.Write("Diviseur Salaire (x) : ");  
-                            DiviseurSalaire = double.Parse(Console.ReadLine());
+                        {                                                                                                                               
                             Console.Clear();
+                            Console.SetCursorPosition((Console.WindowWidth-msg.Length)/2, Console.CursorTop);
+                            Console.WriteLine(msg);
+                            Console.WriteLine("*******Poste "+(count+1)+"********");
+                        // Recuperation du Nom du poste
+                            do
+                            {
+                                Console.Write("Nom : ");    
+                                
+                            } while (Fonction.TestOnName(nomPoste = Console.ReadLine()));
+                        //Recuperation du salaire de base du poste
+                            do
+                            {
+                                Console.Write("Salaire de base (>0): ");  
+                            } while (Fonction.TestOnDoubleNumber(Console.ReadLine(), ref salaireBase) || salaireBase<=0);
+                        //Recuperation du taux d'augmentation
+                            do
+                            {
+                                Console.Write("Taux augmentation (> 0): ");  
+                            } while (Fonction.TestOnDoubleNumber(Console.ReadLine(), ref TauxAugmentation) || TauxAugmentation<=0);
+                        //Recuperation du diviseur de salaire x
+                            do
+                            {
+                                 Console.Write("Diviseur Salaire (x > 0) : ");  
+                            } while (Fonction.TestOnDoubleNumber(Console.ReadLine(), ref DiviseurSalaire) || DiviseurSalaire<=0);
+                            //Nettoyage de la fenetre de la console
+                            Console.Clear();
+                            //test de creation du poste 
                             resp = entreprise.AjouterPoste(new Poste(nomPoste.ToUpper(), TauxAugmentation, DiviseurSalaire, salaireBase));
-                            
                         } while (resp);
-                        
-                        if(++count == nbrePoste) 
-                            break;
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine("Erreur : "+ex.Message);
-                    }
-                }
+       
         }
 
        
         public static void Action(Entreprise entreprise){
             
-               int choix;
+               string choix, msg = "MENU-ADMIN";
+                Console.SetCursorPosition((Console.WindowWidth-msg.Length)/2, Console.CursorTop);
+                Console.WriteLine(msg);
             do
             {
                 Console.Write("1 - Remplir les infos de l'entreprise\n2 - Creer des poste pour votre entreprise\n3 - Afficher les informations de poste\n4 - Afficher Les information de l'entreprise\n0-Quitter\n> ");
@@ -95,11 +116,11 @@ namespace SessionAdminApp
                         break;
                     default:
                         Console.WriteLine("Fin du travail d'administration");
-                        return;
+                        break;
                 }
-                Console.WriteLine("Tapez O pour quitter ...");
-                choix = int.Parse(Console.ReadLine());
-            } while (choix!=0);
+                Console.WriteLine("Tapez q pour quitter  la session Admin...");
+                choix = Console.ReadLine() ;
+            } while (choix.ToLower() != "q");
 
         }
         private static void GetEnterpriseInformationAsString(Entreprise entreprise){
