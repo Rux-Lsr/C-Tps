@@ -118,14 +118,15 @@ namespace FonctionsApp
         }
 
         public static int Menu(){
+            Console.Clear();
             string msg = "MENU-General";
             int choix = 0;
             Console.SetCursorPosition((Console.WindowWidth-msg.Length)/2, Console.CursorTop);
             Console.WriteLine(msg);
             
             Console.WriteLine("1 - Session Administrateur\n2 - Session Utilisateur\n0 - Quitter");
-            while (TestOnNumber(Console.ReadLine(), ref choix) || !Fonction.InTheInterval(0, 2, choix));
-
+            while (!int.TryParse(Console.ReadLine(), out choix) || !Fonction.InTheInterval(0, 2, choix));
+            
             return choix;
         }
     }

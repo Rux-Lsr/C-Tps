@@ -20,12 +20,15 @@ public class Program
                     SessionUtilisateur.Action(entreprise);
                     break;
                 default:
-                    Console.WriteLine("Sortie du Programme ! !!");
+                    goto End;
                     break;
             }
                 Console.WriteLine("Tapez Q pour quitter le programme...  ");
                 choix = Console.ReadLine() ;
-        } while (choix.ToLower() != "q");
+        } while (choix.ToUpper() != "q");
+            Console.WriteLine("Fin du Programme ! !!");
+            End:
+                Console.WriteLine("Fin du Programme ! !!");
 
     }
 }

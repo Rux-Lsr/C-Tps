@@ -9,15 +9,15 @@ public class Salaire
     public  int NumeroEmploye { get; set; }
 
     // Constructeur
-   public Salaire(string nomEmploye, string sexeEmploye, int anneRecrutement, Poste posteEmploye, int NumeroEmploye)
+   public Salaire(string nomEmploye, string sexeEmploye, int anneRecrutement, Poste posteEmploye, string Matricule)
     {
         this.NumeroEmploye = NumeroEmploye;
-        Matricule = $"{AnneRecrutement % 100}{PosteEmploye.NomPoste[0]}{NumeroEmploye.ToString("D4")}";
+        this.Matricule = Matricule;
         NomEmploye = nomEmploye;
         SexeEmploye = sexeEmploye;
         AnneRecrutement = anneRecrutement;
         PosteEmploye = posteEmploye;
-        SalaireEmploye = CalculerSalaire();
+        SalaireEmploye = posteEmploye.SalaireDeBase;
     }
 
     // Méthode pour calculer le salaire d'un employé
@@ -28,7 +28,7 @@ public class Salaire
             int anciennete = DateTime.Now.Year - AnneRecrutement;
             double augmentation = (double)(PosteEmploye.SalaireDeBase * PosteEmploye.TauxAugmentation / 100) * anciennete;
             double salaire = (double)(PosteEmploye.SalaireDeBase + augmentation) / PosteEmploye.DiviseurSalaire;
-
+            SalaireEmploye = salaire;
             return salaire;
         }
         catch (Exception ex)

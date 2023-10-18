@@ -88,7 +88,7 @@ namespace SessionAdminApp
 
        
         public static void Action(Entreprise entreprise){
-            
+                Console.Clear();
                string choix, msg = "MENU-ADMIN";
                 Console.SetCursorPosition((Console.WindowWidth-msg.Length)/2, Console.CursorTop);
                 Console.WriteLine(msg);
@@ -116,13 +116,14 @@ namespace SessionAdminApp
                         GetEnterpriseInformationAsString(entreprise);
                         break;
                     default:
-                        Console.WriteLine("Fin du travail d'administration");
-                        break;
+                        goto End;
                 }
                 Console.WriteLine("Tapez q pour quitter  la session Admin...");
                 choix = Console.ReadLine() ;
+                End:
+                    choix="q";
             } while (choix.ToLower() != "q");
-
+            Console.WriteLine("Fin du travail d'administration");
         }
         private static void GetEnterpriseInformationAsString(Entreprise entreprise){
             Console.WriteLine( $"Nom: {entreprise.NomEntreprise} Anee de creation  : {entreprise.DateCreation}");

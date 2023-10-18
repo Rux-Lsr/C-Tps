@@ -46,8 +46,8 @@ namespace UserSessionApp
                         PrintAllPoste(entreprise);         
                 } while (!int.TryParse(Console.ReadLine(), out poste) || (poste > entreprise.Postes.Count || poste < 0));
 
-
-                entreprise.Salaires.Add(new Salaire(nom, sexe, DateTime.Parse(date).Year, entreprise.GetPoste(poste-1), i+1));
+                string Matricule = $"{DateTime.Parse(date).Year % 100}{entreprise.Postes[poste].NomPoste[0]}{i.ToString("D4")}";
+                entreprise.Salaires.Add(new Salaire(nom, sexe, DateTime.Parse(date).Year, entreprise.GetPoste(poste), Matricule));
             }
     }
     
@@ -55,15 +55,21 @@ namespace UserSessionApp
         int count = 0;
         foreach (var item in entreprise.Postes)
         {
-           Console.Write($"{count+1} - {item.NomPoste}");
+           Console.Write($"{count++} - {item.NomPoste} ");
         }
         Console.Write("\n> ");
     }
     private static void PrintSalairesInformations(Entreprise entreprise){
+        Console.Clear();
+        if (entreprise.Salaires.Count == 0)
+        {
+            Console.WriteLine("!!!Pas d'employés!!!!");
+            return ;
+        }
         Console.WriteLine("Matricule|Nom                      |sexe|Annee|Poste                      |Salaire                      ");
         foreach (var item in entreprise.Salaires)
         {
-            Console.WriteLine($"{item.Matricule}|{item.NomEmploye}                      |{item.SexeEmploye}|{item.AnneRecrutement}|{item.PosteEmploye}                      |{item.SalaireEmploye}                     "); 
+            Console.WriteLine($"{item.Matricule}|{item.NomEmploye}                      |{item.SexeEmploye}|{item.AnneRecrutement}|{item.PosteEmploye.NomPoste}                      |{item.CalculerSalaire}                     "); 
         }
     }
     public static void Action(Entreprise entreprise){
@@ -81,6 +87,7 @@ namespace UserSessionApp
                     Console.WriteLine($"{t} est non valide, entrez à nouveau un nombre compris entre 0 et 4 : \n> ");
                     t = int.Parse(Console.ReadLine());
                 }
+                
             switch (t)
             {   
                 case 1: 
@@ -90,12 +97,14 @@ namespace UserSessionApp
                     PrintSalairesInformations(entreprise);
                     break;
                 default:
-                    Console.WriteLine("Fin Session Utilisateur");
-                    break;
+                    goto End;
             }
-                Console.WriteLine("Tapez q pour quitter  la session utilisateur...");
+                Console.WriteLine("Tapez Q pour quitter  la session utilisateur...");
                 choix = Console.ReadLine();
-        } while (choix.ToLower() != "q");
+            End:
+                choix="q";
+        } while (choix.ToUpper() != "Q");
+            Console.WriteLine("Fin Session Utilisateur");
     }
 }
-}
+}       
