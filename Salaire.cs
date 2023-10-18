@@ -6,7 +6,7 @@ public class Salaire
     public int AnneRecrutement { get; set; }
     public Poste PosteEmploye { get; set; }
     public double SalaireEmploye { get; set; }
-    public static int NumeroEmploye { get; set; }
+    public static int NumeroEmploye { get; set; } = 0;
 
     // Constructeur
    public Salaire(string nomEmploye, string sexeEmploye, int anneRecrutement, Poste posteEmploye)
@@ -17,6 +17,7 @@ public class Salaire
         AnneRecrutement = anneRecrutement;
         PosteEmploye = posteEmploye;
         SalaireEmploye = CalculerSalaire();
+        NumeroEmploye++;
     }
 
     // Méthode pour calculer le salaire d'un employé
