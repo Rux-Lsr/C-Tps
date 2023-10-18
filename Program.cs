@@ -12,23 +12,23 @@ public class Program
         {
             switch (Fonction.Menu())
             {
-                case 1:          
+                case 0:          
                     SessionAdmin.Action(entreprise);
                     break;
-                case 2:
+                case 1:
                     Console.WriteLine("Bienvenue dans la session Utilisateur");
                     SessionUtilisateur.Action(entreprise);
                     break;
                 default:
-                    goto End;
-                    break;
+                    break;     
             }
-                Console.WriteLine("Tapez Q pour quitter le programme...  ");
-                choix = Console.ReadLine() ;
-        } while (choix.ToUpper() != "q");
-            Console.WriteLine("Fin du Programme ! !!");
-            End:
-                Console.WriteLine("Fin du Programme ! !!");
-
+                Console.Clear();
+                Console.WriteLine("Touche 'entrer' pour continuer et 'echap' pour Sortir de la session...");
+                ConsoleKeyInfo touche = Console.ReadKey();
+            
+                if (touche.Key == ConsoleKey.Escape)
+                    break;
+        } while (true);
+            Console.WriteLine("Fin du Programme !!!");
     }
 }

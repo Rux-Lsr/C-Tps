@@ -36,9 +36,5 @@ public class Salaire
             Console.WriteLine("Erreur lors du calcul du salaire: " + ex.Message);
             return 0;
         }
-    }
-   
-
-       
-    
+    } 
 }

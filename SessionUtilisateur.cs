@@ -73,14 +73,14 @@ namespace UserSessionApp
         }
     }
     public static void Action(Entreprise entreprise){
-        string choix, msg = "MENU-User";
+        string msg = "MENU-User";
         Console.Clear();
-                Console.SetCursorPosition((Console.WindowWidth-msg.Length)/2, Console.CursorTop);
-                Console.WriteLine(msg);
+        Console.SetCursorPosition((Console.WindowWidth-msg.Length)/2, Console.CursorTop);
+        Console.WriteLine(msg);
         
         do
         {
-            Console.Write("1 - Ajouter Employe\n2 - Afficher information Employe\n0-quitter\n> ");
+            Console.Write("1 - Ajouter Employe\n2 - Afficher information Employe\n0-quitter\n ");
             int t = 0;
                 t = int.Parse(Console.ReadLine());
                 while(t>4 || t<0){
@@ -90,21 +90,25 @@ namespace UserSessionApp
                 
             switch (t)
             {   
-                case 1: 
+                case 1:
+                    Console.Clear(); 
                     CreerEmployes(entreprise);
                     break;
                 case 2:
+                    Console.Clear();
                     PrintSalairesInformations(entreprise);
                     break;
                 default:
-                    goto End;
+                    break;
             }
-                Console.WriteLine("Tapez Q pour quitter  la session utilisateur...");
-                choix = Console.ReadLine();
-            End:
-                choix="q";
-        } while (choix.ToUpper() != "Q");
-            Console.WriteLine("Fin Session Utilisateur");
+            Console.WriteLine("Touche 'entrer' pour continuer et 'echap' pour Sortir de la session...");
+            ConsoleKeyInfo touche = Console.ReadKey();
+            
+            if (touche.Key == ConsoleKey.Escape)
+                break;
+        } while (true);
+        Console.Clear();
+            Console.WriteLine("Fin Session Utilisateur ...");
     }
 }
 }       
