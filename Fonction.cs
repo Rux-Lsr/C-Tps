@@ -118,59 +118,64 @@ namespace FonctionsApp
         }
 
         public static int Menu(){
-    string[] options = { "Session Administrateur", "Session Utilisateur", "Quitter" };
-    int selectedOption = 0;
+            string[] options = { "Session Administrateur", "Session Utilisateur", "Quitter" };
+            int selectedOption = 0;
 
-    while (true)
-    {
-        Console.Clear();
-
-        string msg = "MENU-General";
-        Console.SetCursorPosition((Console.WindowWidth-msg.Length)/2, Console.CursorTop);
-        Console.WriteLine(msg);
-
-        for (int i = 0; i < options.Length; i++)
-        {
-            if (i == selectedOption)
+            while (true)
             {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.Write("-> ");
+                Console.Clear();
+                Console.CursorVisible = false;
+                string msg = "****************************************MENU-General****************************************";
+                Console.SetCursorPosition((Console.WindowWidth-msg.Length)/2, Console.CursorTop);
+                Console.WriteLine(msg);
+
+                for (int i = 0; i < options.Length; i++)
+                {
+                    if (i == selectedOption)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write("-> ");
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.Write("   ");
+                    }
+
+                    Console.WriteLine(options[i]);
+                }
+
+                var key = Console.ReadKey(true);
+
+                switch (key.Key)
+                {
+                    case ConsoleKey.UpArrow:
+                        selectedOption--;
+                        if (selectedOption < 0)
+                            selectedOption = options.Length - 1;
+                        break;
+
+                    case ConsoleKey.DownArrow:
+                        selectedOption++;
+                        if (selectedOption >= options.Length)
+                            selectedOption = 0;
+                        break;
+
+                    default:
+                        break;
+                }
+
+                if (key.Key == ConsoleKey.Enter)
+                {
+                    return selectedOption;
+                }
             }
-            else
-            {
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.Write("   ");
-            }
-
-            Console.WriteLine(options[i]);
         }
+        public static void Clear(){
+            Console.SetCursorPosition(0, Console.CursorTop);
+            Console.Write(new string(' ', Console.WindowWidth));
+            Console.SetCursorPosition(0, Console.CursorTop);
 
-        var key = Console.ReadKey(true);
-
-        switch (key.Key)
-        {
-            case ConsoleKey.UpArrow:
-                selectedOption--;
-                if (selectedOption < 0)
-                    selectedOption = options.Length - 1;
-                break;
-
-            case ConsoleKey.DownArrow:
-                selectedOption++;
-                if (selectedOption >= options.Length)
-                    selectedOption = 0;
-                break;
-
-            default:
-                break;
         }
-
-        if (key.Key == ConsoleKey.Enter)
-        {
-            return selectedOption;
-        }
-    }
-}
-
     }
 }

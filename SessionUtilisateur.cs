@@ -7,6 +7,9 @@ namespace UserSessionApp
     
     private static void CreerEmployes(Entreprise entreprise)
     {
+        string msg  = $"\"*******************CREATION D'EMPLOYE(s)*******************";
+            Console.SetCursorPosition((Console.WindowWidth-msg.Length)/2, Console.CursorTop);
+            Console.WriteLine(msg);
         if(entreprise.Postes.Count == 0){
             Console.WriteLine("Non existence de poste, Veuillez en creer dans la session admin avant de vous diriger vers la creation d'employe");
             return;
@@ -18,15 +21,18 @@ namespace UserSessionApp
             while (Fonction.TestOnNumber(Console.ReadLine(), ref EmployeeNumber)) ;
 
             
-            string msg  = $"\"*******************Creation de {EmployeeNumber} Employé(s)*******************";
+            msg  = $"\"*******************Creation de {EmployeeNumber} Employé(s)*******************";
             Console.SetCursorPosition((Console.WindowWidth-msg.Length)/2, Console.CursorTop);
             Console.WriteLine(msg);
             for (int i = 0; i < EmployeeNumber; i++)
             {
+                msg  = $"\"*******************Creation de {EmployeeNumber} Employé(s)*******************";
+                Console.SetCursorPosition((Console.WindowWidth-msg.Length)/2, Console.CursorTop);
+                Console.WriteLine(msg);
                 string nom, sexe, date;
                 int poste, ValidYear = 0;
                 Console.SetCursorPosition((Console.WindowWidth-msg.Length)/2, Console.CursorTop);
-                Console.WriteLine(msg=$"*********Salaire N° {i + 1}*********");
+                Console.WriteLine(msg=$"*********EMPLOYE N° {i + 1}*********");
 
                       Console.Write("Entrez le nom\n>");
                   while (Fonction.TestOnName(nom = Console.ReadLine()));
@@ -46,7 +52,7 @@ namespace UserSessionApp
                         PrintAllPoste(entreprise);         
                 } while (!int.TryParse(Console.ReadLine(), out poste) || (poste > entreprise.Postes.Count || poste < 0));
 
-                string Matricule = $"{DateTime.Parse(date).Year % 100}{entreprise.Postes[poste].NomPoste[0]}{i.ToString("D4")}";
+                string Matricule = $"{DateTime.Parse(date).Year % 100}{entreprise.Postes[poste].NomPoste[0]}{(i+1).ToString("D4")}";
                 entreprise.Salaires.Add(new Salaire(nom, sexe, DateTime.Parse(date).Year, entreprise.GetPoste(poste), Matricule));
             }
     }
@@ -59,54 +65,92 @@ namespace UserSessionApp
         }
         Console.Write("\n> ");
     }
-    private static void PrintSalairesInformations(Entreprise entreprise){
+    private static void PrintSalairesInformations(Entreprise entreprise)
+    {
         Console.Clear();
         if (entreprise.Salaires.Count == 0)
         {
             Console.WriteLine("!!!Pas d'employés!!!!");
-            return ;
+            return;
         }
-        Console.WriteLine("Matricule|Nom                      |sexe|Annee|Poste                      |Salaire                      ");
+
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine("{0,-10} {1,-25} {2,-5} {3,-5} {4,-25} {5,-25}", "Matricule", "Nom", "Sexe", "Annee", "Poste", "Salaire");
+        Console.ResetColor();
+
         foreach (var item in entreprise.Salaires)
         {
-            Console.WriteLine($"{item.Matricule}|{item.NomEmploye}                      |{item.SexeEmploye}|{item.AnneRecrutement}|{item.PosteEmploye.NomPoste}                      |{item.CalculerSalaire}                     "); 
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("{0,-10} {1,-25} {2,-5} {3,-5} {4,-25} {5,-25}", item.Matricule, item.NomEmploye, item.SexeEmploye, item.AnneRecrutement, item.PosteEmploye.NomPoste, item.CalculerSalaire());
         }
     }
+
     public static void Action(Entreprise entreprise){
         string msg = "MENU-User";
-        Console.Clear();
-        Console.SetCursorPosition((Console.WindowWidth-msg.Length)/2, Console.CursorTop);
-        Console.WriteLine(msg);
-        
-        do
+        string[] options = {"Ajouter Employe", "Afficher information Employe", "quitter"};
+        int selectedOption = 0;
+        Console.CursorVisible = false;
+        while(true)
         {
-            Console.Write("1 - Ajouter Employe\n2 - Afficher information Employe\n0-quitter\n ");
-            int t = 0;
-                t = int.Parse(Console.ReadLine());
-                while(t>4 || t<0){
-                    Console.WriteLine($"{t} est non valide, entrez à nouveau un nombre compris entre 0 et 4 : \n> ");
-                    t = int.Parse(Console.ReadLine());
+            Console.Clear();
+            Console.SetCursorPosition((Console.WindowWidth-msg.Length)/2, Console.CursorTop);
+            Console.WriteLine(msg);
+
+            for (int i = 0; i < options.Length; i++)
+            {
+                if(i == selectedOption){
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write("-> ");
+                }else{
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write("   ");
                 }
+                Console.WriteLine(options[i]);
+            }   
                 
-            switch (t)
+            var key = Console.ReadKey(true);
+            
+                
+            switch (key.Key)
             {   
-                case 1:
-                    Console.Clear(); 
-                    CreerEmployes(entreprise);
+                case ConsoleKey.UpArrow:
+                    selectedOption--;
+                    if(selectedOption < 0)
+                        selectedOption = options.Length-1;
                     break;
-                case 2:
-                    Console.Clear();
-                    PrintSalairesInformations(entreprise);
+                case ConsoleKey.DownArrow:
+                    selectedOption++;
+                    if(selectedOption >= options.Length)
+                        selectedOption = 0;
                     break;
+
                 default:
                     break;
             }
-            Console.WriteLine("Touche 'entrer' pour continuer et 'echap' pour Sortir de la session...");
-            ConsoleKeyInfo touche = Console.ReadKey();
+            if(key.Key == ConsoleKey.Enter)
+            {
+                switch(selectedOption){
+                    case 0:
+                        Console.Clear();
+                        CreerEmployes(entreprise);
+                        break;
+                    case 1:
+                        Console.Clear();
+                        PrintSalairesInformations(entreprise);
+                        break;
+                    default:
+                        break;
+                }
+                Console.Write("Touche 'entrer' pour continuer et 'echap' pour Sortir de la session user...");
+                Console.CursorVisible = true;
+                ConsoleKeyInfo touche = Console.ReadKey();
+                
+                if (touche.Key == ConsoleKey.Escape)
+                    break;
+            }
+
             
-            if (touche.Key == ConsoleKey.Escape)
-                break;
-        } while (true);
+        }
         Console.Clear();
             Console.WriteLine("Fin Session Utilisateur ...");
     }

@@ -11,7 +11,7 @@ namespace SessionAdminApp
         {
             string nom;
             int dateCreation = 0;
-            string input, msg = "ENREGISTREMENT DES INFORMATIONS DE L'ENTREPRISE";
+            string input, msg = "****************************************ENREGISTREMENT DES INFORMATIONS DE L'ENTREPRISE****************************************";
 
             Console.SetCursorPosition((Console.WindowWidth-msg.Length)/2, Console.CursorTop);
             Console.WriteLine(msg);
@@ -35,12 +35,12 @@ namespace SessionAdminApp
         private static void CreerPostes(ref Entreprise entreprise){
             int nbrePoste = 0;
             string nomPoste;
-            string msg = "CREATION DES POSTES DE L'ENTREPRISE";
+            string msg = "****************************************CREATION DES POSTES DE L'ENTREPRISE****************************************";
             double salaireBase = 0, TauxAugmentation = 0, DiviseurSalaire = 0;
             int count = 0;
             bool resp;
             
-            Console.Clear();
+            Fonction.Clear();
             Console.SetCursorPosition((Console.WindowWidth-msg.Length)/2, Console.CursorTop);
             Console.WriteLine(msg);
             do
@@ -56,7 +56,7 @@ namespace SessionAdminApp
                     Console.Clear();
                     Console.SetCursorPosition((Console.WindowWidth-msg.Length)/2, Console.CursorTop);
                     Console.WriteLine(msg);
-                    Console.WriteLine("*******Poste "+(count+1)+"********");
+                    Console.WriteLine("****************************************Poste "+(count+1)+"****************************************");
                 // Recuperation du Nom du poste
                     do
                     {
@@ -86,97 +86,121 @@ namespace SessionAdminApp
        
         }
 
-    public static void Action(Entreprise entreprise){
-        string[] options = { "Remplir les infos de l'entreprise", "Creer des poste pour votre entreprise", "Afficher les informations de poste", "Afficher Les information de l'entreprise", "Quitter" };
-        int selectedOption = 0;
+        public static void Action(Entreprise entreprise){
+            string[] options = { "Remplir les infos de l'entreprise", "Creer des poste pour votre entreprise", "Afficher les informations de poste", "Afficher Les information de l'entreprise", "Quitter" };
+            int selectedOption = 0;
 
-        while (true)
-        {
-            Console.Clear();
-
-            string msg = "MENU-ADMIN";
-            Console.SetCursorPosition((Console.WindowWidth-msg.Length)/2, Console.CursorTop);
-            Console.WriteLine(msg);
-
-            for (int i = 0; i < options.Length; i++)
+            while (true)
             {
-                if (i == selectedOption)
+                Console.Clear();
+                Console.CursorVisible = false;
+                string msg = "****************************************MENU-ADMIN****************************************";
+                Console.SetCursorPosition((Console.WindowWidth-msg.Length)/2, Console.CursorTop);
+                Console.WriteLine(msg);
+
+                for (int i = 0; i < options.Length; i++)
                 {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.Write("-> ");
+                    if (i == selectedOption)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write("-> ");
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.Write("   ");
+                    }
+
+                    Console.WriteLine(options[i]);
                 }
-                else
+
+                var key = Console.ReadKey(true);
+
+                switch (key.Key)
                 {
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.Write("   ");
-                }
-
-                Console.WriteLine(options[i]);
-            }
-
-            var key = Console.ReadKey(true);
-
-            switch (key.Key)
-            {
-                case ConsoleKey.UpArrow:
-                    selectedOption--;
-                    if (selectedOption < 0)
-                        selectedOption = options.Length - 1;
-                    break;
-
-                case ConsoleKey.DownArrow:
-                    selectedOption++;
-                    if (selectedOption >= options.Length)
-                        selectedOption = 0;
-                    break;
-
-                default:
-                    break;
-            }
-
-            if (key.Key == ConsoleKey.Enter)
-            {
-                switch (selectedOption)
-                {
-                    case 0:
-                        EntrerInformationsEntreprise(ref entreprise);
+                    case ConsoleKey.UpArrow:
+                        selectedOption--;
+                        if (selectedOption < 0)
+                            selectedOption = options.Length - 1;
                         break;
-                    case 1:
-                        CreerPostes(ref entreprise);
+
+                    case ConsoleKey.DownArrow:
+                        selectedOption++;
+                        if (selectedOption >= options.Length)
+                            selectedOption = 0;
                         break;
-                    case 2:
-                        printPostesInformations(entreprise);
-                        break;
-                    case 3:
-                        GetEnterpriseInformationAsString(entreprise);
-                        break;
-                    case 4:
-                        return;
+
                     default:
                         break;
                 }
-                Console.WriteLine("Touche 'entrer' pour continuer et 'echap' pour Sortir de la session...");
-                ConsoleKeyInfo touche = Console.ReadKey();
-                
-                if (touche.Key == ConsoleKey.Escape)
-                    break;
+
+                if (key.Key == ConsoleKey.Enter)
+                {
+                    switch (selectedOption)
+                    {
+                        case 0:
+                            EntrerInformationsEntreprise(ref entreprise);
+                            break;
+                        case 1:
+                            CreerPostes(ref entreprise);
+                            break;
+                        case 2:
+                            printPostesInformations(entreprise);
+                            break;
+                        case 3:
+                            GetEnterpriseInformationAsString(entreprise);
+                            break;
+                        case 4:
+                            return;
+                        default:
+                            break;
+                    }
+                    Console.WriteLine("Touche 'entrer' pour continuer et 'echap' pour Sortir de la session admin...");
+                    Console.CursorVisible = true;
+                    ConsoleKeyInfo touche = Console.ReadKey();
+                    
+                    if (touche.Key == ConsoleKey.Escape)
+                        break;
+                }
             }
+            Console.WriteLine("Fin de la session utilisateur d'administration");
         }
-        Console.WriteLine("Fin du travail d'administration");
-}
 
         private static void GetEnterpriseInformationAsString(Entreprise entreprise){
-            Console.WriteLine( $"Nom: {entreprise.NomEntreprise} Anee de creation  : {entreprise.DateCreation}");
+                string msg = "***************************************INFOS ENTREPRISE****************************************";
+                Console.SetCursorPosition((Console.WindowWidth-msg.Length)/2, Console.CursorTop);
+                Console.WriteLine(msg);
+            Console.WriteLine( $"Nom: {entreprise.NomEntreprise} \nAnee de creation  : {entreprise.DateCreation}");
         }
         private static void printPostesInformations(Entreprise entreprise){
-            Console.WriteLine($"|{"Nom du poste",-20}|{"Salaire de base",-20}|{"Taux d'augmentation",-20}|{"Diviseur de salaire",-20}|");
+            Console.WriteLine($"|{"Nom du poste",-20}{"Salaire de base",-20}{"Taux d'augmentation",-20}{"Diviseur de salaire",-20}");
             foreach (var item in entreprise.Postes)
             {
                 
-                Console.WriteLine($"|{item.NomPoste,-20}|{item.SalaireDeBase,-20:C2}|{item.TauxAugmentation,-20:P2}|{item.DiviseurSalaire,-20:N2}|");
+                Console.WriteLine($"{item.NomPoste,-20}{item.SalaireDeBase,-20:C2}{item.TauxAugmentation,-20:P0}{item.DiviseurSalaire,-20:N2}");
             }
         }
+        private static void SupprimerEmploye(Entreprise entreprise){
+            printPostesInformations(entreprise);
+            Console.Write("\n\n");
 
+            string msg = "****************************************SUPPRESSION D'EMPLOYE****************************************";
+            Console.SetCursorPosition((Console.WindowWidth-msg.Length)/2, Console.CursorTop);
+            Console.WriteLine(msg);
+            if (entreprise.Salaires.Count == 0)
+            {
+                Console.WriteLine("Liste d'employe vide");
+                return ;
+            }
+            Console.WriteLine("Entrez le matricule de l'user à supprimer");
+            String mat = Console.ReadLine();
+            if (entreprise.Salaires.Any(p => p.Matricule == mat))
+            {
+                entreprise.Salaires.RemoveAt(entreprise.Salaires.FindIndex(p => p.Matricule == mat));
+            }else{
+                Console.WriteLine($"le matricule{mat} non trouvé");
+            }
+        }
     }
 
 }
