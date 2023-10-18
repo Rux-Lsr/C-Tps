@@ -1,23 +1,23 @@
 public class Salaire
 {
-     public string Matricule { get; set; }
+    public string Matricule { get; set; }
     public string NomEmploye { get; set; }
     public string SexeEmploye { get; set; }
     public int AnneRecrutement { get; set; }
     public Poste PosteEmploye { get; set; }
     public double SalaireEmploye { get; set; }
-    public static int NumeroEmploye { get; set; } = 0;
+    public  int NumeroEmploye { get; set; }
 
     // Constructeur
-   public Salaire(string nomEmploye, string sexeEmploye, int anneRecrutement, Poste posteEmploye)
+   public Salaire(string nomEmploye, string sexeEmploye, int anneRecrutement, Poste posteEmploye, int NumeroEmploye)
     {
-       Matricule = $"{AnneRecrutement % 100}{char.ToUpper(PosteEmploye.NomPoste[0])}{NumeroEmploye.ToString("D4")}";
+        this.NumeroEmploye = NumeroEmploye;
+        Matricule = $"{AnneRecrutement % 100}{PosteEmploye.NomPoste[0]}{NumeroEmploye.ToString("D4")}";
         NomEmploye = nomEmploye;
         SexeEmploye = sexeEmploye;
         AnneRecrutement = anneRecrutement;
         PosteEmploye = posteEmploye;
         SalaireEmploye = CalculerSalaire();
-        NumeroEmploye++;
     }
 
     // Méthode pour calculer le salaire d'un employé

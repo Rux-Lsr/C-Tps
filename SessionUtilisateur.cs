@@ -47,7 +47,7 @@ namespace UserSessionApp
                 } while (!int.TryParse(Console.ReadLine(), out poste) || (poste > entreprise.Postes.Count || poste < 0));
 
 
-                entreprise.Salaires.Add(new Salaire(nom, sexe, DateTime.Parse(date).Year, entreprise.GetPoste(poste-1)));
+                entreprise.Salaires.Add(new Salaire(nom, sexe, DateTime.Parse(date).Year, entreprise.GetPoste(poste-1), i+1));
             }
     }
     
@@ -93,7 +93,7 @@ namespace UserSessionApp
                     Console.WriteLine("Fin Session Utilisateur");
                     break;
             }
-                Console.WriteLine("Tapez q pour quitter  la session Admin...");
+                Console.WriteLine("Tapez q pour quitter  la session utilisateur...");
                 choix = Console.ReadLine();
         } while (choix.ToLower() != "q");
     }

@@ -49,39 +49,40 @@ namespace SessionAdminApp
             } while (Fonction.TestOnNumber(Console.ReadLine(), ref nbrePoste) || nbrePoste < 0);
             Console.Clear();
                 
-            
-                        do
-                        {                                                                                                                               
-                            Console.Clear();
-                            Console.SetCursorPosition((Console.WindowWidth-msg.Length)/2, Console.CursorTop);
-                            Console.WriteLine(msg);
-                            Console.WriteLine("*******Poste "+(count+1)+"********");
-                        // Recuperation du Nom du poste
-                            do
-                            {
-                                Console.Write("Nom : ");    
-                                
-                            } while (Fonction.TestOnName(nomPoste = Console.ReadLine()));
-                        //Recuperation du salaire de base du poste
-                            do
-                            {
-                                Console.Write("Salaire de base (>0): ");  
-                            } while (Fonction.TestOnDoubleNumber(Console.ReadLine(), ref salaireBase) || salaireBase<=0);
-                        //Recuperation du taux d'augmentation
-                            do
-                            {
-                                Console.Write("Taux augmentation (> 0): ");  
-                            } while (Fonction.TestOnDoubleNumber(Console.ReadLine(), ref TauxAugmentation) || TauxAugmentation<=0);
-                        //Recuperation du diviseur de salaire x
-                            do
-                            {
-                                 Console.Write("Diviseur Salaire (x > 0) : ");  
-                            } while (Fonction.TestOnDoubleNumber(Console.ReadLine(), ref DiviseurSalaire) || DiviseurSalaire<=0);
-                            //Nettoyage de la fenetre de la console
-                            Console.Clear();
-                            //test de creation du poste 
-                            resp = entreprise.AjouterPoste(new Poste(nomPoste.ToUpper(), TauxAugmentation, DiviseurSalaire, salaireBase));
-                        } while (resp);
+            do
+            {
+                do
+                {                                                                                                                               
+                    Console.Clear();
+                    Console.SetCursorPosition((Console.WindowWidth-msg.Length)/2, Console.CursorTop);
+                    Console.WriteLine(msg);
+                    Console.WriteLine("*******Poste "+(count+1)+"********");
+                // Recuperation du Nom du poste
+                    do
+                    {
+                        Console.Write("Nom : ");                     
+                    } while (Fonction.TestOnName(nomPoste = Console.ReadLine()));
+                //Recuperation du salaire de base du poste
+                    do
+                    {
+                        Console.Write("Salaire de base (>0): ");  
+                    } while (Fonction.TestOnDoubleNumber(Console.ReadLine(), ref salaireBase) || salaireBase<=0);
+                //Recuperation du taux d'augmentation
+                    do
+                    {
+                        Console.Write("Taux augmentation (> 0): ");  
+                    } while (Fonction.TestOnDoubleNumber(Console.ReadLine(), ref TauxAugmentation) || TauxAugmentation<=0);
+                //Recuperation du diviseur de salaire x
+                    do
+                    {
+                        Console.Write("Diviseur Salaire (x > 0) : ");  
+                    } while (Fonction.TestOnDoubleNumber(Console.ReadLine(), ref DiviseurSalaire) || DiviseurSalaire<=0);
+                    //Nettoyage de la fenetre de la console
+                    Console.Clear();
+                    //test de creation du poste 
+                    resp = entreprise.AjouterPoste(new Poste(nomPoste.ToUpper(), TauxAugmentation, DiviseurSalaire, salaireBase));
+                } while (resp);
+            } while (++count < nbrePoste);
        
         }
 
