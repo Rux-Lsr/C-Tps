@@ -8,7 +8,6 @@
 // Fonction pour trouver le système sûr ou non
 
 /// @brief Verifier si une il existe une sequence sure
-/// @param proc la liste des processus du programme
 /// @param avail les ressources disponibles
 /// @param maxm  les ressources maximumale requises par chaque processus
 /// @param allot  ressources alloue aux processus initialement
@@ -60,6 +59,7 @@ void isSafe(int avail[], int maxm[][RESSOURCE], int allot[][RESSOURCE])
         int found = 0;
         for (int p = 0; p < PROCESS; p++)
         {
+
             if (finish[p] == 0)
             {
                 int j;
@@ -69,6 +69,7 @@ void isSafe(int avail[], int maxm[][RESSOURCE], int allot[][RESSOURCE])
                 // Si tous les besoins de p sont satisfaits
                 if (j == RESSOURCE)
                 {
+                    printf("%d\n", p);
                     for (int k = 0 ; k < RESSOURCE; k++)
                         work[k] += allot[p][k];
                     // Ajouter ce processus à la séquence de sécurité
@@ -77,13 +78,14 @@ void isSafe(int avail[], int maxm[][RESSOURCE], int allot[][RESSOURCE])
                     finish[p] = 1;
                     found = 1;
                 }
+
             }
         }
         // Si nous ne pouvons pas trouver un processus suivant dans la séquence de sécurité
         if (found == 0)
         {
-        printf("Le système n'est pas en état sûr");
-        return;
+            printf("Le système n'est pas en état sûr");
+            return;
         }
     }
     // Si le système est en état sûr
