@@ -1,86 +1,90 @@
-#include <stdio.h>
-#include <stdbool.h>
-#include <stdlib.h>
+#include<stdio.h>
+#include<stdlib.h>
+// Nombre de processus
+#define P 5
+void isSafe(int avail, int maxm[], int allot[]);
+void read_ressources_in_file(const char *nom_fichier, int maxm[], int allot[]);
 
+int main()
+{
+     // Ressources disponibles
+    int avail = 10;
+    // Ressources maximales requises par les processus
+    int maxm[P];
+    // Ressources allouées aux processus
+    int allot[P];
 
-bool estSur(int disponible[], int allocation[], int besoin[], int n, int m) {
-    int travail[m];  // Création du tableau travail.
-    bool termine[n];  // Création du tableau termine.
-    for (int i = 0; i < m; i++) {  // Pour chaque ressource...
-        travail[i] = disponible[i];  // Initialiser le tableau travail avec les ressources disponibles.
-    }
-    for (int i = 0; i < n; i++) {  // Pour chaque processus...
-        termine[i] = false;  // Initialiser le tableau termine à false.
-    }
+    // Lecture des données depuis le fichier
+    read_ressources_in_file("process_ressources.txt", maxm, allot);
 
-    // Boucle principale pour vérifier si le système est dans un état sûr.
-    for (int i = 0; i < n; i++) {
-        bool trouve = false;  // Variable pour vérifier si un processus peut terminer.
-        for (int j = 0; j < n; j++) {  // Pour chaque processus...
-            if (!termine[j] && besoin[j] <= travail[0]) {  // Si le processus n'a pas encore terminé et que son besoin est inférieur ou égal à la ressource disponible...
-                travail[0] += allocation[j];  // Ajouter l'allocation du processus à la ressource disponible.
-                termine[j] = true;  // Marquer le processus comme terminé.
-                trouve = true;  // Un processus a été trouvé qui peut terminer.
-                break;  // Sortir de la boucle.
+    // Vérifie si le système est sûr ou non
+    isSafe(avail, maxm, allot);
+}
+/// @brief Verifier si une il existe une sequence sure
+/// @param avail les ressources disponibles
+/// @param maxm  les ressources maximumale requises par chaque processus
+/// @param allot  ressources alloue aux processus initialement
+void isSafe( int avail, int maxm[], int allot[])
+{
+    int need[P];
+    // Calcul des besoins de chaque processus
+    for (int i = 0 ; i < P ; i++)
+        need[i] = maxm[i] - allot[i];
+    int finish[P] = {0};
+    // Pour stocker la séquence de sécurité
+    int safeSeq[P];
+    // Travaillez avec une copie des ressources disponibles
+    int work = avail;
+    // Tant qu'il reste des processus non terminés
+    int count = 0;
+    while (count < P)
+    {
+        // Trouver un processus qui peut être terminé
+        int found = 0;
+        for (int p = 0; p < P; p++)
+        {
+            if (finish[p] == 0 && need[p] <= work)
+            {
+                work += allot[p];
+                safeSeq[count++] = p;
+                finish[p] = 1;
+                found = 1;
             }
         }
-        if (!trouve) {  // Si aucun processus n'a été trouvé qui peut terminer...
-            return false;  // Le système n'est pas dans un état sûr.
+        // Si nous ne pouvons pas trouver un processus suivant dans la séquence de sécurité
+        if (found == 0)
+        {
+            printf("Le système n'est pas en état sûr");
+            return;
         }
     }
-
-    return true;  // Le système est dans un état sûr.
+    // Si le système est en état sûr
+    printf("Le système est en état sûr.\nLa séquence de sécurité est : ");
+    for (int i = 0; i < P ; i++)
+        printf("PROCESS_%d ", safeSeq[i]);
 }
 
-char** banquierRessourceUnique(char* processus[], int disponible, int besoinMax[], int n) {
-    int allocation[n];  // Création du tableau allocation.
-    int besoin[n];  // Création du tableau besoin.
-    for (int i = 0; i < n; i++) {  // Pour chaque processus...
-        allocation[i] = 0;  // Initialiser le tableau allocation à zéro.
-        besoin[i] = besoinMax[i];  // Initialiser le tableau besoin avec le besoin maximum de chaque processus.
+/// @brief lires les donnes representant les ressources dans un fichier
+/// @param nom_fichier  chemin d'access au fichier dans le quel lire
+/// @param maxm ressources maximale a utiliser par les  processus
+/// @param allot ressources initiale affectees au processus
+void read_ressources_in_file(const char *nom_fichier, int maxm[], int allot[])
+{
+    FILE *fichier = fopen(nom_fichier, "r");
+    if (fichier == NULL)
+    {
+        printf("Erreur lors de l'ouverture du fichier.\n");
+        exit(1);
     }
 
-    // Vérifier si le système est dans un état sûr.
-    if (estSur(&disponible, allocation, besoin, n, 1)) {
-        char** sequenceSure = malloc(sizeof(char*) * n);  // Création du tableau sequenceSure.
-        int index = 0;  // Initialisation de l'index pour le tableau seq
-// Fonction principale.uenceSure.
-        for (int i = 0; i < n; i++) {  // Pour chaque processus...
-            for (int j = 0; j < n; j++) {  // Pour chaque processus...
-                if (besoin[j] <= disponible) {  // Si le besoin du processus est inférieur ou égal à la ressource disponible...
-                    disponible += allocation[j];  // Ajouter l'allocation du processus à la ressource disponible.
-                    allocation[j] = 0;  // Réinitialiser l'allocation du processus à zéro.
-                    besoin[j] = 0;  // Réinitialiser le besoin du processus à zéro.
-                    sequenceSure[index++] = processus[j];  // Ajouter le processus à la séquence sûre.
-                    break;  // Sortir de la boucle.
-                }
-            }
+    for (int i = 0; i < P; i++)
+    {
+        if (fscanf(fichier, "%d %d", &maxm[i], &allot[i]) != 2)
+        {
+            printf("Erreur lors de la lecture des données.\n");
+            exit(1);
         }
-        return sequenceSure;  // Retourner la séquence sûre.
-    } else {
-        char** message = malloc(sizeof(char*) * 1);  // Création du tableau message.
-        message[0] = "Le système n'est pas dans un état sûr.";  // Ajouter le message d'erreur au tableau message.
-        return message;  // Retourner le message d'erreur.
-    }
-}
-
-int main() {
-    char* processus[] = {"P0", "P1", "P2", "P3"};  // Définition des processus.
-    int disponible = 3;  // Définition de la ressource disponible.
-    int besoinMax[] = {3, 2, 2, 1};  // Définition du besoin maximum de chaque processus.
-    int n = sizeof(processus) / sizeof(processus[0]);  // Calcul du nombre de processus.
-
-    // Exécution de l'algorithme du banquier pour une ressource unique.
-    char** resultat = banquierRessourceUnique(processus, disponible, besoinMax, n);
-    if (resultat[0][0] == 'L') {  // Si le premier caractère du résultat est 'L'...
-        printf("%s\n", resultat[0]);  // Afficher le message d'erreur.
-    } else {
-        for (int i = 0; i < n; i++) {  // Pour chaque processus...
-            printf("%s ", resultat[i]);  // Afficher le processus dans la séquence sûre.
-        }
-        printf("\n");  // Ajouter une nouvelle ligne à la fin de l'affichage.
     }
 
-    free(resultat);  // Libérer la mémoire allouée pour le tableau resultat.
-    return 0;  // Terminer le programme avec le code de sortie 0.
+    fclose(fichier);
 }
