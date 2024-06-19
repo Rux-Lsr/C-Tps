@@ -35,6 +35,39 @@ int main()
     return 0;
 }
 
+void generateMatrix(int rows, int cols, int **M) {
+  // Initialize the matrix with zeros
+  for (int i = 0; i < rows; i++) {
+    for (int j = 0; j < cols; j++) {
+      M[i][j] = 0;
+    }
+  }
+
+  // Populate the matrix with values (replace with your desired logic)
+  int counter = 1;
+  for (int i = 0; i < rows; i++) {
+    for (int j = 0; j < cols; j++) {
+      M[i][j] = counter++;
+    }
+  }
+}
+
+void allocateMatrixMemory(int rows, int cols, int **matrix) {
+  // Allocate memory for the row pointers
+  *matrix = (int **)malloc(rows * sizeof(int *));
+
+  if (*matrix == NULL) {
+    printf("Error: Memory allocation failed for row pointers\n");
+    exit(1);
+  }
+
+  // Allocate memory for each row of the matrix
+    for (int i = 0; i < rows; i++) {
+        matrix[i] = malloc(sizeof(int)*cols);
+    }
+
+}
+
 void isSafe(int avail[], int maxm[][RESSOURCE], int allot[][RESSOURCE])
 {
     int need[PROCESS][RESSOURCE];
@@ -93,6 +126,7 @@ void isSafe(int avail[], int maxm[][RESSOURCE], int allot[][RESSOURCE])
     for (int i = 0; i < PROCESS ; i++)
         printf("PROCESS_%d ", safeSeq[i]);
 }
+
 void read_ressources_in_file(const char *nom_fichier, int maxm[][RESSOURCE], int allot[][RESSOURCE]) {
     FILE *fichier = fopen(nom_fichier, "r");
     if (fichier == NULL) {
