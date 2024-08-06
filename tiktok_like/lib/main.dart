@@ -34,6 +34,7 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: homeAppBar(),
       body: const TikTokScroll(),
       bottomNavigationBar: const MyBottomNavigationBar(),
