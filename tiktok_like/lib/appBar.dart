@@ -9,15 +9,18 @@ AppBar homeAppBar() {
       children: [
         Text(
           'Abonnement',
-          style: TextStyle(fontSize: 15),
+          style: TextStyle(
+              fontSize: 15, color: Colors.white, fontWeight: FontWeight.bold),
         ),
         Text(
           'Amis',
-          style: TextStyle(fontSize: 15),
+          style: TextStyle(
+              fontSize: 15, color: Colors.white, fontWeight: FontWeight.bold),
         ),
         Text(
           'Pour toi',
-          style: TextStyle(fontSize: 15),
+          style: TextStyle(
+              fontSize: 15, color: Colors.white, fontWeight: FontWeight.bold),
         )
       ],
     ),
