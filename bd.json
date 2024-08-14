@@ -1,0 +1,19 @@
+[
+  {
+    "title": "Simple/Basique",
+    "parole": "Ok, j'vais sortir un nouvel album\nMais, avant, faut qu'on revoit les bases\nJ'vais faire une vidéo simple où j'vais dire des trucs simples\nParce que vous êtes trop cons\nSimple, basique, okay\n\nLes gens les plus intelligents sont pas toujours ceux qui parlent le mieux (simple)\nLes hommes politiques doivent mentir sinon tu voterais pas pour eux (basique)\nSi tu dis souvent qu't'as pas d'problème avec l'alcool, c'est qu't'en as un (simple)\nFaut pas faire un enfant avec les personnes que tu connais pas bien (basique)\nLes mecs du FN ont la même tête que les méchants dans les films (simple)\nEntre avoir des principes et être un sale con, la ligne est très fine (basique)\nHugo Boss habillait les nazis, le style a son importance (simple)\nLes dauphins sont des violeurs, ouais, méfie-toi des apparences (basique)\n\nBasique, simple, simple, basique\nBasique, simple, simple, basique\nVous n'avez pas les bases, vous n'avez pas les bases\nVous n'avez pas les bases, vous n'avez pas les bases\n\nSi c'est marqué sur internet, c'est p't-être faux mais c'est p't-être vrai (simple)\nIlluminatis ou pas, qu'est-ce que ça change ? Tu t'fais baiser (basique)\nÀ l'étranger, t'es un étranger, ça sert à rien d'être raciste (simple)\nLes mecs les plus fous sont souvent les mecs les plus tristes (basique)\nCent personnes possèdent la moitié des richesses du globe (simple)\nTu s'ras toujours à un ou deux numéros d'avoir le quinté dans l'ordre (basique)\nSi t'es souvent seul avec tes problèmes, c'est parce que souvent l'problème c'est toi (simple)\nToutes les générations disent que celle d'après fait n'importe quoi (cliché)\n\nBasique, simple, simple, basique\nBasique, simple, simple, basique\nBasique, simple, simple, basique\nBasique, simple, simple, basique\nVous n'avez pas les bases\nVous n'avez pas les bases\nVous n'avez pas les bases\nVous n'avez pas les bases\nBasique, simple, vous n'avez pas les bases\nBasique, simple, vous n'avez pas les bases\nBasique, simple, vous n'avez pas les bases\nBasique, simple, vous n'avez pas les bases\nBasique, simple, simple, basique\nBasique, simple, simple, basique\nBasique, simple, simple, basique\nBasique, simple, simple, vous n'avez pas les bases",
+    "page": 1,
+    "voices_path": [
+      "assets/audio/1/orelsan/orelsan1.mp3",
+      "assets/audio/1/orelsan/orelsan2.mp3"
+    ]
+  },
+  {
+    "title": "Ils sont cools",
+    "page": 1,
+    "parole": "ils cont cools blblblblblblblbaaaaaaaaaaaaablalbalablabalbalbalablabalbalbalbalbalablabalbalabalbalba",
+    "voices_path": [
+      "assets/audio/2/orelsan3"
+    ]
+  }
+]
